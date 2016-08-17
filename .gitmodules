@@ -1,3 +1,4 @@
 [submodule "upstream"]
 	path = upstream
-	url = git://anongit.freedesktop.org/harfbuzz
+	url = https://git.merproject.org/mirror/harfbuzz.git
+	
