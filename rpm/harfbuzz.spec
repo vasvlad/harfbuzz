@@ -29,7 +29,7 @@ Requires: %{name} = %{version}-%{release}
 Harfbuzz ICU support library.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%setup -q -n %{name}-%{version}/upstream
 
 %build
 %autogen --disable-static
