@@ -1,5 +1,5 @@
 Name:    harfbuzz
-Version: 1.3.0
+Version: 1.8.4
 Release: 1
 Summary: Text shaping library
 License: MIT
@@ -29,7 +29,7 @@ Requires: %{name} = %{version}-%{release}
 Harfbuzz ICU support library.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%setup -q -n %{name}-%{version}/upstream
 
 %build
 %autogen --disable-static
@@ -49,16 +49,21 @@ rm -rf %{buildroot}
 %files
 %doc NEWS AUTHORS COPYING README
 %{_libdir}/libharfbuzz.so.*
+%{_libdir}/libharfbuzz-subset.so.*
 
 %files devel
 %{_bindir}/hb-view
 %{_bindir}/hb-ot-shape-closure
 %{_bindir}/hb-shape
+%{_bindir}/hb-subset
 %{_includedir}/harfbuzz/
 %{_libdir}/libharfbuzz.so
 %{_libdir}/pkgconfig/harfbuzz.pc
 %{_libdir}/libharfbuzz-icu.so
 %{_libdir}/pkgconfig/harfbuzz-icu.pc
+%{_libdir}/libharfbuzz-subset.so
+%{_libdir}/pkgconfig/harfbuzz-subset.pc
+%{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
 
 %files icu
 %{_libdir}/libharfbuzz-icu.so.*
