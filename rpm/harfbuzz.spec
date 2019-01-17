@@ -28,17 +28,29 @@ Requires: %{name} = %{version}-%{release}
 %description    icu
 Harfbuzz ICU support library.
 
+%package doc
+Summary:   Documentation for %{name}
+Group:     Documentation
+Requires:  %{name} = %{version}-%{release}
+
+%description doc
+%{summary}.
+
 %prep
 %setup -q -n %{name}-%{version}/upstream
 
 %build
 %autogen --disable-static
 
-make %{?jobs:-j%jobs}
+make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
 %make_install
+
+mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
+install -m0644 -t %{buildroot}%{_docdir}/%{name}-%{version} \
+        NEWS AUTHORS README
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -47,7 +59,7 @@ rm -rf %{buildroot}
 %postun icu -p /sbin/ldconfig
 
 %files
-%doc NEWS AUTHORS COPYING README
+%license COPYING
 %{_libdir}/libharfbuzz.so.*
 %{_libdir}/libharfbuzz-subset.so.*
 
@@ -67,3 +79,7 @@ rm -rf %{buildroot}
 
 %files icu
 %{_libdir}/libharfbuzz-icu.so.*
+
+%files doc
+%defattr(-,root,root,-)
+%{_docdir}/%{name}-%{version}
