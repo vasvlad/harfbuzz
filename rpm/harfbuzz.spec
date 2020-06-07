@@ -9,6 +9,7 @@ BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(freetype2)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(icu-uc)
+BuildRequires:  pkgconfig(graphite2)
 BuildRequires:  ragel
 
 %description
@@ -39,7 +40,7 @@ Requires:  %{name} = %{version}-%{release}
 %autosetup -n %{name}-%{version}/upstream
 
 %build
-%autogen --disable-static
+%autogen --disable-static --with-graphite2
 %make_build
 
 %install
