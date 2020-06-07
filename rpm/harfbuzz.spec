@@ -1,5 +1,5 @@
 Name:    harfbuzz
-Version: 1.8.4
+Version: 2.6.7
 Release: 1
 Summary: Text shaping library
 License: MIT
