@@ -1,14 +1,15 @@
 Name:    harfbuzz
-Version: 1.8.4
+Version: 2.6.7
 Release: 1
 Summary: Text shaping library
 License: MIT
-URL:     http://freedesktop.org/wiki/Software/HarfBuzz
-Source0: http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-%{version}.tar.bz2
+URL:     https://harfbuzz.github.io/
+Source0: %{name}-%{version}.tar.bz2
 BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(freetype2)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(icu-uc)
+BuildRequires:  pkgconfig(graphite2)
 BuildRequires:  ragel
 
 %description
@@ -30,27 +31,20 @@ Harfbuzz ICU support library.
 
 %package doc
 Summary:   Documentation for %{name}
-Group:     Documentation
 Requires:  %{name} = %{version}-%{release}
 
 %description doc
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}/upstream
+%autosetup -n %{name}-%{version}/upstream
 
 %build
-%autogen --disable-static
-
-make %{?_smp_mflags}
+%autogen --disable-static --with-graphite2
+%make_build
 
 %install
-rm -rf %{buildroot}
 %make_install
-
-mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
-install -m0644 -t %{buildroot}%{_docdir}/%{name}-%{version} \
-        NEWS AUTHORS README
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -59,11 +53,13 @@ install -m0644 -t %{buildroot}%{_docdir}/%{name}-%{version} \
 %postun icu -p /sbin/ldconfig
 
 %files
+%defattr(-,root,root,-)
 %license COPYING
 %{_libdir}/libharfbuzz.so.*
 %{_libdir}/libharfbuzz-subset.so.*
 
 %files devel
+%defattr(-,root,root,-)
 %{_bindir}/hb-view
 %{_bindir}/hb-ot-shape-closure
 %{_bindir}/hb-shape
@@ -78,8 +74,9 @@ install -m0644 -t %{buildroot}%{_docdir}/%{name}-%{version} \
 %{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
 
 %files icu
+%defattr(-,root,root,-)
 %{_libdir}/libharfbuzz-icu.so.*
 
 %files doc
 %defattr(-,root,root,-)
-%{_docdir}/%{name}-%{version}
+%doc NEWS AUTHORS README.md
