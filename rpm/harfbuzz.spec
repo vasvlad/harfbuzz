@@ -1,5 +1,5 @@
 Name:    harfbuzz
-Version: 2.6.7
+Version: 2.7.2
 Release: 1
 Summary: Text shaping library
 License: MIT
@@ -18,33 +18,33 @@ HarfBuzz is an implementation of the OpenType Layout engine.
 %package devel
 Summary:  Development files for Harfbuzz
 Requires: %{name} = %{version}-%{release}
+Requires: %{name}-icu = %{version}-%{release}
 
 %description devel
 Development package for the Harfbuzz library.
 
 %package icu
-Summary: Harfbuzz ICU support library
+Summary:  Harfbuzz ICU support library
 Requires: %{name} = %{version}-%{release}
 
-%description    icu
+%description icu
 Harfbuzz ICU support library.
-
-%package doc
-Summary:   Documentation for %{name}
-Requires:  %{name} = %{version}-%{release}
-
-%description doc
-%{summary}.
 
 %prep
 %autosetup -n %{name}-%{version}/upstream
 
 %build
-%autogen --disable-static --with-graphite2
+%autogen --disable-static --with-gobject=no --with-graphite2
 %make_build
 
 %install
 %make_install
+
+# Sometimes fuzzing tests can time out running under qemu on OBS
+%ifarch %{ix86} x86_64
+%check
+make check
+%endif
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -60,6 +60,7 @@ Requires:  %{name} = %{version}-%{release}
 
 %files devel
 %defattr(-,root,root,-)
+%doc NEWS AUTHORS README.md
 %{_bindir}/hb-view
 %{_bindir}/hb-ot-shape-closure
 %{_bindir}/hb-shape
@@ -76,7 +77,3 @@ Requires:  %{name} = %{version}-%{release}
 %files icu
 %defattr(-,root,root,-)
 %{_libdir}/libharfbuzz-icu.so.*
-
-%files doc
-%defattr(-,root,root,-)
-%doc NEWS AUTHORS README.md
