@@ -1,4 +1,4 @@
 [submodule "upstream"]
 	path = upstream
-	url = https://git.sailfishos.org/mirror/harfbuzz.git
+	url = https://github.com/sailfishos-mirror/harfbuzz.git
 	
