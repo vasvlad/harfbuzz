@@ -1,5 +1,5 @@
 Name:    harfbuzz
-Version: 2.7.2
+Version: 8.1.1
 Release: 1
 Summary: Text shaping library
 License: MIT
@@ -56,11 +56,13 @@ make check
 %defattr(-,root,root,-)
 %license COPYING
 %{_libdir}/libharfbuzz.so.*
+%{_libdir}/libharfbuzz-cairo.so.*
 %{_libdir}/libharfbuzz-subset.so.*
 
 %files devel
 %defattr(-,root,root,-)
 %doc NEWS AUTHORS README.md
+%{_bindir}/hb-info
 %{_bindir}/hb-view
 %{_bindir}/hb-ot-shape-closure
 %{_bindir}/hb-shape
@@ -68,6 +70,8 @@ make check
 %{_includedir}/harfbuzz/
 %{_libdir}/libharfbuzz.so
 %{_libdir}/pkgconfig/harfbuzz.pc
+%{_libdir}/libharfbuzz-cairo.so
+%{_libdir}/pkgconfig/harfbuzz-cairo.pc
 %{_libdir}/libharfbuzz-icu.so
 %{_libdir}/pkgconfig/harfbuzz-icu.pc
 %{_libdir}/libharfbuzz-subset.so
