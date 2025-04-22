@@ -43,6 +43,7 @@ Harfbuzz ICU support library.
 %autosetup -n %{name}-%{version}/upstream
 
 %build
+export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %autogen --enable-static --with-gobject=no --with-graphite2
 %make_build
 
